@@ -1,33 +1,60 @@
-# Cache and Environment files
-__pycache__/
-*.pyc
+# Environment variables — never commit this
 .env
-.venv
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
 env/
 venv/
-.ipynb_checkpoints/
-
-# Node modules (Frontend and Backend)
-node_modules/
+.venv/
+*.egg-info/
 dist/
-.env.local
+build/
+.pytest_cache/
+.mypy_cache/
 
-# OS files
-.DS_Store
-Thumbs.db
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
 
-# Heavy Model Weights (Keep configurations, ignore heavy binaries)
-models/lstm_soh/*.pt
-models/xgboost_soh/*.json
-models/yolov8_components/*.pt
+# Build outputs
+frontend/dist/
+frontend/build/
 
-# ==========================================
-# DATASET FOLDERS (Ignored to keep repo clean)
-# ==========================================
+# Datasets — too large for git, folders completely ignored
 data/nasa_battery/
 data/calce/
 data/synthetic/
 
-# Ignore all zipped dataset files
-data/**/*.zip
-data/**/*.tar.gz
+# Model weights — too large for git
+models/lstm_soh/
+models/xgboost_soh/
+models/yolov8_components/
+
+# Notebooks checkpoints
+notebooks/.ipynb_checkpoints/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Docker
+.docker/
