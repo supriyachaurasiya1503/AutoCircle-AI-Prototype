@@ -345,13 +345,9 @@ The AutoCircle AI platform is built using a decoupled architecture, balancing a 
 
 | Layer | Technology | Key Role / Functionality |
 | :--- | :--- | :--- |
-| **ML / AI Pipeline** | ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=flat-square&logo=jupyter&logoColor=white) | **Data Science Pipeline:** Custom data engineering, exploratory data analysis (EDA), and deep learning model training (LSTM & XGBoost ensembling) for precise Battery SOH estimation. |
+| **ML / AI Pipeline** | ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=flat-square&logo=jupyter&logoColor=white) | **Data Science Pipeline:** Custom data engineering, exploratory data analysis (EDA),YOLOv8 and deep learning model training (LSTM & XGBoost ensembling) for precise Battery SOH estimation. |
 | **Backend API** | ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat-square&logo=fastapi&logoColor=white) | **Asynchronous REST API:** Engineered for high-throughput, serving real-time model inference and seamless communication between the core AI engine and the frontend. |
 | **Frontend UI** | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) | **Interactive Web Prototype:** Standalone dashboard featuring high-fidelity interactive visualization for fleet health heatmaps, disassembly sequence mapping, and DPP (Digital Product Passport) viewers. |
-
-**AI/ML:** PyTorch (LSTM), XGBoost, Gaussian Process Regression, PySyft (federated),
-YOLOv8, PPO (Stable-Baselines3), PointNet++, 3D Diffusion Model, NSGA-II, FEniCS,
-Claude API + BERT NER, GNN (carbon), TorchServe + BentoML, AWS SageMaker, W&B
 
 ---
 
