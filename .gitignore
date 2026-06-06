@@ -1,0 +1,33 @@
+# Cache and Environment files
+__pycache__/
+*.pyc
+.env
+.venv
+env/
+venv/
+.ipynb_checkpoints/
+
+# Node modules (Frontend and Backend)
+node_modules/
+dist/
+.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Heavy Model Weights (Keep configurations, ignore heavy binaries)
+models/lstm_soh/*.pt
+models/xgboost_soh/*.json
+models/yolov8_components/*.pt
+
+# ==========================================
+# DATASET FOLDERS (Ignored to keep repo clean)
+# ==========================================
+data/nasa_battery/
+data/calce/
+data/synthetic/
+
+# Ignore all zipped dataset files
+data/**/*.zip
+data/**/*.tar.gz
