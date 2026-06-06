@@ -62,67 +62,23 @@ runs fully client-side.
 
 ## Repository Structure
 
-```
+
 autocircle-ai/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── BatterySOH/          # fleet heatmap, SOH charts, RUL display
-│   │   │   ├── Disassembly/         # YOLOv8 feed UI, RL sequence planner
-│   │   │   ├── MaterialPassport/    # DPP generator, passport viewer, QR export
-│   │   │   ├── GenerativeDesign/    # design brief form, Pareto plot, 3D viewer
-│   │   │   └── CarbonAI/            # carbon calculator, ACCT tracker, Sankey diagram
-│   │   ├── api/                     # API client + WebSocket hooks
-│   │   ├── store/                   # Zustand global state
-│   │   └── App.tsx
-│   └── package.json
-│
 ├── backend/
-│   ├── api_gateway/                 # Node.js Express (auth, routing, WebSocket)
 │   └── ml_services/
-│       ├── soh_prediction/          # LSTM + XGBoost inference
-│       │   ├── model.py
-│       │   ├── features.py          # 85-feature engineering pipeline
-│       │   └── serve.py             # TorchServe handler
-│       ├── disassembly_planner/     # YOLOv8 + PPO RL agent
-│       │   ├── detector.py
-│       │   └── planner.py
-│       ├── passport_generator/      # Claude API + Neo4j pipeline
-│       │   ├── llm_pipeline.py
-│       │   └── knowledge_graph.py
-│       ├── generative_design/       # diffusion model + NSGA-II
-│       │   ├── diffusion.py
-│       │   └── optimizer.py
-│       └── carbon_estimator/        # GNN trained on Ecoinvent 3.9
-│           ├── gnn_model.py
-│           └── lca_factors.py
-│   └── requirements.txt
-│
-├── models/
-│   ├── lstm_soh/                    # trained LSTM weights (.pt)
-│   ├── xgboost_soh/                 # XGBoost artifacts (.json)
-│   └── yolov8_components/           # fine-tuned YOLOv8 weights (.pt)
+│       └── main.py                     # FastAPI backend serving core AI inference
 │
 ├── data/
-│   ├── nasa_battery/                # NASA PCoE preprocessed (gitignored, see setup)
-│   ├── calce/                       # CALCE university dataset (gitignored)
-│   └── synthetic/                   # augmented training samples
+│   └── nasa_battery/                   # NASA PCoE dataset directory (Gitignored for heavy files)
 │
-├── notebooks/
-│   ├── 01_soh_eda.ipynb             # dataset exploration
-│   ├── 02_lstm_training.ipynb       # LSTM training + evaluation
-│   ├── 03_xgboost_training.ipynb    # XGBoost + Optuna HPO
-│   ├── 04_carbon_gnn.ipynb          # GNN carbon estimator
-│   └── 05_design_optimizer.ipynb    # NSGA-II generative design demo
+├── notebook/
+│   └── battery_model_training.ipynb    # Data exploration, LSTM model training & evaluation
 │
 ├── prototype/
-│   └── autocircle_prototype.html    # standalone interactive prototype
+│   └── autocircle_prototype.html       # Standalone interactive UI prototype / dashboard
 │
-├── .env.example                     # copy this to .env and fill in your keys
-├── docker-compose.yml
-├── LICENSE
-└── README.md
-```
+├── .gitignore                          # Standard rule file to ignore heavy data & environment files
+└── README.md                           # Project documentation and submission overview
 
 ---
 
@@ -383,21 +339,31 @@ UN SDG alignment: SDG 9, SDG 12, SDG 13, SDG 17.
 
 ---
 
-## Tech Stack
+## 🛠️ Technology Stack & Architecture
 
-**Frontend:** React 18 + TypeScript, Vite, Zustand, React Query, Tailwind CSS, Shadcn/ui,
-Recharts, D3.js, Three.js, Socket.io, PWA service workers
+The AutoCircle AI platform is built using a decoupled architecture, balancing a high-performance Machine Learning pipeline with a lightweight, responsive user interface.
 
-**Backend:** Node.js + Express, Python FastAPI, Redis + Bull (job queue), Docker +
-Kubernetes, GitHub Actions → Docker Hub → AWS EKS
+### 💻 Current Working Prototype
+
+| Layer | Technology | Key Role / Functionality |
+| :--- | :--- | :--- |
+| **ML / AI Pipeline** | ![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white) ![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=flat-square&logo=jupyter&logoColor=white) | **Data Science Pipeline:** Custom data engineering, exploratory data analysis (EDA), and deep learning model training (LSTM & XGBoost ensembling) for precise Battery SOH estimation. |
+| **Backend API** | ![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat-square&logo=fastapi&logoColor=white) | **Asynchronous REST API:** Engineered for high-throughput, serving real-time model inference and seamless communication between the core AI engine and the frontend. |
+| **Frontend UI** | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black) | **Interactive Web Prototype:** Standalone dashboard featuring high-fidelity interactive visualization for fleet health heatmaps, disassembly sequence mapping, and DPP (Digital Product Passport) viewers. |
 
 **AI/ML:** PyTorch (LSTM), XGBoost, Gaussian Process Regression, PySyft (federated),
 YOLOv8, PPO (Stable-Baselines3), PointNet++, 3D Diffusion Model, NSGA-II, FEniCS,
 Claude API + BERT NER, GNN (carbon), TorchServe + BentoML, AWS SageMaker, W&B
 
-**Data:** MongoDB Atlas, InfluxDB, Neo4j, Redis, AWS S3, Apache Kafka, Spark + Feast,
-DVC + MLflow, Evidently AI, Grafana + Prometheus, Polygon blockchain
+---
 
+## 🚀 Future Enterprise Roadmap (Scalability)
+
+To scale the prototype into a production-ready, globally distributed enterprise solution, the system architecture is designed to integrate the following advanced stacks:
+
+*   **Production UI Framework:** `React 18` + `TailwindCSS` for responsive, component-driven modular state management.
+*   **Scalable Database:** `MongoDB Atlas` for high-availability document storage of battery lifecycle logs and telemetry data.
+*   **Immutable Trust Layer:** `Blockchain (Polygon)` to anchor decentralized, tamper-proof Digital Battery Passports compliant with EU Battery Regulation 2023.
 ---
 
 ## Datasets Used
