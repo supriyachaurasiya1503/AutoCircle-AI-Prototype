@@ -1,0 +1,673 @@
+{
+  "dataset": "data\\battery_cycle_level_dataset_CLEAN_FINAL.csv",
+  "shape": {
+    "rows": 1415,
+    "columns": 7
+  },
+  "columns": {
+    "battery_id": {
+      "dtype": "object",
+      "missing": 0,
+      "unique_count": 34,
+      "unique_values_or_first_10": [
+        "B0005",
+        "B0006",
+        "B0007",
+        "B0018",
+        "B0025",
+        "B0026",
+        "B0027",
+        "B0028",
+        "B0029",
+        "B0030",
+        "B0031",
+        "B0032",
+        "B0033",
+        "B0034",
+        "B0036",
+        "B0038",
+        "B0039",
+        "B0040",
+        "B0041",
+        "B0042",
+        "B0043",
+        "B0044",
+        "B0045",
+        "B0046",
+        "B0047",
+        "B0048",
+        "B0049",
+        "B0050",
+        "B0051",
+        "B0052",
+        "B0053",
+        "B0054",
+        "B0055",
+        "B0056"
+      ]
+    },
+    "cycle": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique_count": 168,
+      "unique_values_or_first_10": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ]
+    },
+    "voltage": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique_count": 1415,
+      "unique_values_or_first_10": [
+        3.532781069916797,
+        3.5429679883355183,
+        3.5530561298298746,
+        3.5458485201697254,
+        3.544456056134174,
+        3.555518011319956,
+        3.550391740377309,
+        3.55743645121441,
+        3.5534969394692286,
+        3.557887851734781
+      ]
+    },
+    "temperature": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique_count": 1415,
+      "unique_values_or_first_10": [
+        32.536890917131714,
+        32.643595085177715,
+        32.52252561728893,
+        32.492082733461324,
+        32.368611575014725,
+        32.25124161987058,
+        32.36619211449594,
+        32.36748861666199,
+        32.339648365008244,
+        32.19118046612876
+      ]
+    },
+    "capacity": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique_count": 1415,
+      "unique_values_or_first_10": [
+        1.8619764616792724,
+        1.851862025854008,
+        1.8408078298748616,
+        1.8500581719003597,
+        1.8494324960696809,
+        1.8411378898424131,
+        1.8406214079526009,
+        1.831163829566243,
+        1.83954583513475,
+        1.8300190765668485
+      ]
+    },
+    "soh": {
+      "dtype": "float64",
+      "missing": 0,
+      "unique_count": 1382,
+      "unique_values_or_first_10": [
+        1.0,
+        0.9945679034974788,
+        0.9886310959133612,
+        0.9935991189876996,
+        0.993263091200262,
+        0.9888083591464604,
+        0.988530975462809,
+        0.983451653258151,
+        0.9879533243270472,
+        0.9828368479569272
+      ]
+    },
+    "rul": {
+      "dtype": "int64",
+      "missing": 0,
+      "unique_count": 168,
+      "unique_values_or_first_10": [
+        167,
+        166,
+        165,
+        164,
+        163,
+        162,
+        161,
+        160,
+        159,
+        158
+      ]
+    }
+  },
+  "battery_ids": [
+    "B0005",
+    "B0006",
+    "B0007",
+    "B0018",
+    "B0025",
+    "B0026",
+    "B0027",
+    "B0028",
+    "B0029",
+    "B0030",
+    "B0031",
+    "B0032",
+    "B0033",
+    "B0034",
+    "B0036",
+    "B0038",
+    "B0039",
+    "B0040",
+    "B0041",
+    "B0042",
+    "B0043",
+    "B0044",
+    "B0045",
+    "B0046",
+    "B0047",
+    "B0048",
+    "B0049",
+    "B0050",
+    "B0051",
+    "B0052",
+    "B0053",
+    "B0054",
+    "B0055",
+    "B0056"
+  ],
+  "cycles_per_battery": {
+    "B0005": {
+      "rows": 168,
+      "first_cycle": 1,
+      "last_cycle": 168,
+      "first_capacity": 1.8619764616792724,
+      "first_soh": 1.0,
+      "last_soh": 0.713327812872088,
+      "first_rul": 167,
+      "last_rul": 0
+    },
+    "B0006": {
+      "rows": 155,
+      "first_cycle": 1,
+      "last_cycle": 155,
+      "first_capacity": 2.061365253061398,
+      "first_soh": 1.0,
+      "last_soh": 0.604448676087178,
+      "first_rul": 154,
+      "last_rul": 0
+    },
+    "B0007": {
+      "rows": 168,
+      "first_cycle": 1,
+      "last_cycle": 168,
+      "first_capacity": 1.918658380763664,
+      "first_soh": 1.0,
+      "last_soh": 0.7592082444717322,
+      "first_rul": 167,
+      "last_rul": 0
+    },
+    "B0018": {
+      "rows": 132,
+      "first_cycle": 1,
+      "last_cycle": 132,
+      "first_capacity": 1.8628605393516025,
+      "first_soh": 1.0,
+      "last_soh": 0.7260848716242323,
+      "first_rul": 131,
+      "last_rul": 0
+    },
+    "B0025": {
+      "rows": 5,
+      "first_cycle": 1,
+      "last_cycle": 12,
+      "first_capacity": 2.38978578436141,
+      "first_soh": 1.0,
+      "last_soh": 1.0456987683574603,
+      "first_rul": 11,
+      "last_rul": 0
+    },
+    "B0026": {
+      "rows": 18,
+      "first_cycle": 1,
+      "last_cycle": 25,
+      "first_capacity": 2.2671531821701323,
+      "first_soh": 1.0,
+      "last_soh": 1.0480473802945485,
+      "first_rul": 24,
+      "last_rul": 0
+    },
+    "B0027": {
+      "rows": 14,
+      "first_cycle": 1,
+      "last_cycle": 26,
+      "first_capacity": 2.1500213204348104,
+      "first_soh": 1.0,
+      "last_soh": 1.0375176816480778,
+      "first_rul": 25,
+      "last_rul": 0
+    },
+    "B0028": {
+      "rows": 27,
+      "first_cycle": 1,
+      "last_cycle": 28,
+      "first_capacity": 2.2055127168653943,
+      "first_soh": 1.0,
+      "last_soh": 1.0129843852657088,
+      "first_rul": 27,
+      "last_rul": 0
+    },
+    "B0029": {
+      "rows": 32,
+      "first_cycle": 1,
+      "last_cycle": 40,
+      "first_capacity": 1.7466509466710296,
+      "first_soh": 1.0,
+      "last_soh": 0.9475957736071808,
+      "first_rul": 39,
+      "last_rul": 0
+    },
+    "B0030": {
+      "rows": 34,
+      "first_cycle": 1,
+      "last_cycle": 40,
+      "first_capacity": 1.6922186842825493,
+      "first_soh": 1.0,
+      "last_soh": 0.942070316470764,
+      "first_rul": 39,
+      "last_rul": 0
+    },
+    "B0031": {
+      "rows": 21,
+      "first_cycle": 1,
+      "last_cycle": 40,
+      "first_capacity": 1.6928955206965115,
+      "first_soh": 1.0,
+      "last_soh": 1.0023259175841568,
+      "first_rul": 39,
+      "last_rul": 0
+    },
+    "B0032": {
+      "rows": 29,
+      "first_cycle": 1,
+      "last_cycle": 40,
+      "first_capacity": 1.7104563678995892,
+      "first_soh": 1.0,
+      "last_soh": 0.960212885367231,
+      "first_rul": 39,
+      "last_rul": 0
+    },
+    "B0033": {
+      "rows": 3,
+      "first_cycle": 2,
+      "last_cycle": 146,
+      "first_capacity": 0.7175047024704309,
+      "first_soh": 1.0,
+      "last_soh": 0.7418987979980496,
+      "first_rul": 144,
+      "last_rul": 0
+    },
+    "B0034": {
+      "rows": 1,
+      "first_cycle": 1,
+      "last_cycle": 1,
+      "first_capacity": 0.99805898709808,
+      "first_soh": 1.0,
+      "last_soh": 1.0,
+      "first_rul": 0,
+      "last_rul": 0
+    },
+    "B0036": {
+      "rows": 1,
+      "first_cycle": 1,
+      "last_cycle": 1,
+      "first_capacity": 1.0047759561813825,
+      "first_soh": 1.0,
+      "last_soh": 1.0,
+      "first_rul": 0,
+      "last_rul": 0
+    },
+    "B0038": {
+      "rows": 1,
+      "first_cycle": 1,
+      "last_cycle": 1,
+      "first_capacity": 1.0897584144153376,
+      "first_soh": 1.0,
+      "last_soh": 1.0,
+      "first_rul": 0,
+      "last_rul": 0
+    },
+    "B0039": {
+      "rows": 11,
+      "first_cycle": 2,
+      "last_cycle": 12,
+      "first_capacity": 0.5624579262975833,
+      "first_soh": 1.0,
+      "last_soh": 0.9604728234544628,
+      "first_rul": 10,
+      "last_rul": 0
+    },
+    "B0040": {
+      "rows": 2,
+      "first_cycle": 1,
+      "last_cycle": 47,
+      "first_capacity": 0.6792885689788853,
+      "first_soh": 1.0,
+      "last_soh": 0.8304989263438606,
+      "first_rul": 46,
+      "last_rul": 0
+    },
+    "B0041": {
+      "rows": 25,
+      "first_cycle": 43,
+      "last_cycle": 67,
+      "first_capacity": 1.3311112558152849,
+      "first_soh": 1.0,
+      "last_soh": 0.72398782004458,
+      "first_rul": 24,
+      "last_rul": 0
+    },
+    "B0042": {
+      "rows": 99,
+      "first_cycle": 1,
+      "last_cycle": 112,
+      "first_capacity": 1.7691576482030955,
+      "first_soh": 1.0,
+      "last_soh": 0.7975667855272549,
+      "first_rul": 111,
+      "last_rul": 0
+    },
+    "B0043": {
+      "rows": 66,
+      "first_cycle": 1,
+      "last_cycle": 112,
+      "first_capacity": 1.7324236494479983,
+      "first_soh": 1.0,
+      "last_soh": 0.7552526707524132,
+      "first_rul": 111,
+      "last_rul": 0
+    },
+    "B0044": {
+      "rows": 66,
+      "first_cycle": 1,
+      "last_cycle": 112,
+      "first_capacity": 1.6894808191135984,
+      "first_soh": 1.0,
+      "last_soh": 0.740374763644991,
+      "first_rul": 111,
+      "last_rul": 0
+    },
+    "B0045": {
+      "rows": 70,
+      "first_cycle": 1,
+      "last_cycle": 72,
+      "first_capacity": 1.2130043500964764,
+      "first_soh": 1.0,
+      "last_soh": 0.6177234715358593,
+      "first_rul": 71,
+      "last_rul": 0
+    },
+    "B0046": {
+      "rows": 69,
+      "first_cycle": 1,
+      "last_cycle": 72,
+      "first_capacity": 1.798180493127139,
+      "first_soh": 1.0,
+      "last_soh": 0.6905268817732971,
+      "first_rul": 71,
+      "last_rul": 0
+    },
+    "B0047": {
+      "rows": 69,
+      "first_cycle": 1,
+      "last_cycle": 72,
+      "first_capacity": 1.7059834942332734,
+      "first_soh": 1.0,
+      "last_soh": 0.6966788156755531,
+      "first_rul": 71,
+      "last_rul": 0
+    },
+    "B0048": {
+      "rows": 69,
+      "first_cycle": 1,
+      "last_cycle": 72,
+      "first_capacity": 1.6601663126545914,
+      "first_soh": 1.0,
+      "last_soh": 0.7380783773084777,
+      "first_rul": 71,
+      "last_rul": 0
+    },
+    "B0049": {
+      "rows": 8,
+      "first_cycle": 1,
+      "last_cycle": 25,
+      "first_capacity": 0.952821920821196,
+      "first_soh": 1.0,
+      "last_soh": 0.9973992832712434,
+      "first_rul": 24,
+      "last_rul": 0
+    },
+    "B0050": {
+      "rows": 2,
+      "first_cycle": 1,
+      "last_cycle": 15,
+      "first_capacity": 0.9412937248824824,
+      "first_soh": 1.0,
+      "last_soh": 0.6611873755947686,
+      "first_rul": 14,
+      "last_rul": 0
+    },
+    "B0051": {
+      "rows": 1,
+      "first_cycle": 1,
+      "last_cycle": 1,
+      "first_capacity": 0.6877232937287606,
+      "first_soh": 1.0,
+      "last_soh": 1.0,
+      "first_rul": 0,
+      "last_rul": 0
+    },
+    "B0052": {
+      "rows": 1,
+      "first_cycle": 1,
+      "last_cycle": 1,
+      "first_capacity": 0.8578934620790512,
+      "first_soh": 1.0,
+      "last_soh": 1.0,
+      "first_rul": 0,
+      "last_rul": 0
+    },
+    "B0053": {
+      "rows": 45,
+      "first_cycle": 1,
+      "last_cycle": 55,
+      "first_capacity": 1.308078118006157,
+      "first_soh": 1.0,
+      "last_soh": 1.0036167333418562,
+      "first_rul": 54,
+      "last_rul": 0
+    },
+    "B0054": {
+      "rows": 1,
+      "first_cycle": 1,
+      "last_cycle": 1,
+      "first_capacity": 0.8538551723277968,
+      "first_soh": 1.0,
+      "last_soh": 1.0,
+      "first_rul": 0,
+      "last_rul": 0
+    },
+    "B0055": {
+      "rows": 1,
+      "first_cycle": 1,
+      "last_cycle": 1,
+      "first_capacity": 0.854757654236459,
+      "first_soh": 1.0,
+      "last_soh": 1.0,
+      "first_rul": 0,
+      "last_rul": 0
+    },
+    "B0056": {
+      "rows": 1,
+      "first_cycle": 1,
+      "last_cycle": 1,
+      "first_capacity": 0.7940826247649219,
+      "first_soh": 1.0,
+      "last_soh": 1.0,
+      "first_rul": 0,
+      "last_rul": 0
+    }
+  },
+  "numeric_summary": {
+    "cycle": {
+      "count": 1415.0,
+      "mean": 55.38939929328622,
+      "std": 42.72849749965561,
+      "min": 1.0,
+      "5%": 4.0,
+      "25%": 21.0,
+      "50%": 43.0,
+      "75%": 87.0,
+      "95%": 141.0,
+      "max": 168.0
+    },
+    "voltage": {
+      "count": 1415.0,
+      "mean": 3.420612379412785,
+      "std": 0.1664604051450854,
+      "min": 2.5300104336765608,
+      "5%": 3.0756789597421808,
+      "25%": 3.3870783329922545,
+      "50%": 3.4525961253213784,
+      "75%": 3.5074500169354503,
+      "95%": 3.5643810647147753,
+      "max": 3.7530265184592335
+    },
+    "temperature": {
+      "count": 1415.0,
+      "mean": 26.589773002906654,
+      "std": 13.19604543688296,
+      "min": 7.684549736519659,
+      "5%": 7.986292187883204,
+      "25%": 9.55518569603576,
+      "50%": 31.13925948710509,
+      "75%": 32.753400160390825,
+      "95%": 53.69401707919537,
+      "max": 54.99737199703748
+    },
+    "capacity": {
+      "count": 1415.0,
+      "mean": 1.5011914484509647,
+      "std": 0.31699543232887406,
+      "min": 0.520104892932856,
+      "5%": 0.8569527197262735,
+      "25%": 1.321639692062791,
+      "50%": 1.504114579600463,
+      "75%": 1.7090220631435415,
+      "95%": 1.9768922985454753,
+      "max": 2.4989960513448937
+    },
+    "soh": {
+      "count": 1415.0,
+      "mean": 0.849014044869124,
+      "std": 0.11921894156512947,
+      "min": 0.604448676087178,
+      "5%": 0.6498611989817861,
+      "25%": 0.750777353658937,
+      "50%": 0.8503500391537945,
+      "75%": 0.9611739780281205,
+      "95%": 1.0201267530810096,
+      "max": 1.0485271606255615
+    },
+    "rul": {
+      "count": 1415.0,
+      "mean": 54.17597173144876,
+      "std": 43.709203512978206,
+      "min": 0.0,
+      "5%": 2.0,
+      "25%": 16.5,
+      "50%": 43.0,
+      "75%": 86.0,
+      "95%": 140.0,
+      "max": 167.0
+    }
+  },
+  "correlations": {
+    "cycle": {
+      "cycle": 1.0,
+      "voltage": 0.03627095979562713,
+      "temperature": 0.030306569559085627,
+      "capacity": -0.25615143681658803,
+      "soh": -0.6221610402171923,
+      "rul": -0.3553398312896931
+    },
+    "voltage": {
+      "cycle": 0.03627095979562713,
+      "voltage": 1.0,
+      "temperature": 0.24977682418867803,
+      "capacity": 0.4664155980685097,
+      "soh": 0.25750841959659765,
+      "rul": 0.36851126299103415
+    },
+    "temperature": {
+      "cycle": 0.030306569559085627,
+      "voltage": 0.24977682418867803,
+      "temperature": 1.0,
+      "capacity": 0.5362930517785643,
+      "soh": 0.4185833503944154,
+      "rul": 0.17453651066820913
+    },
+    "capacity": {
+      "cycle": -0.25615143681658803,
+      "voltage": 0.4664155980685097,
+      "temperature": 0.5362930517785643,
+      "capacity": 1.0,
+      "soh": 0.6434861432259479,
+      "rul": 0.4480278650694611
+    },
+    "soh": {
+      "cycle": -0.6221610402171923,
+      "voltage": 0.25750841959659765,
+      "temperature": 0.4185833503944154,
+      "capacity": 0.6434861432259479,
+      "soh": 1.0,
+      "rul": 0.33272006742240134
+    },
+    "rul": {
+      "cycle": -0.3553398312896931,
+      "voltage": 0.36851126299103415,
+      "temperature": 0.17453651066820913,
+      "capacity": 0.4480278650694611,
+      "soh": 0.33272006742240134,
+      "rul": 1.0
+    }
+  },
+  "duplicate_rows": 0,
+  "duplicate_battery_cycle_keys": 0,
+  "target_definition_checks": {
+    "soh_scale_min": 0.604448676087178,
+    "soh_scale_max": 1.0485271606255615,
+    "capacity_over_first_capacity_mae_fraction": 3.758281475586219e-17,
+    "capacity_over_first_capacity_max_abs_error_fraction": 4.440892098500626e-16,
+    "capacity_over_first_capacity_exact_all_rows": true,
+    "rul_equals_max_cycle_minus_cycle_rows": 1415,
+    "rul_equals_max_cycle_minus_cycle_fraction": 1.0,
+    "interpretation": "SOH is capacity divided by the battery's first recorded capacity. RUL equals final observed cycle minus current cycle and leaks future information."
+  },
+  "unavailable_raw_signals": [
+    "current",
+    "charge_duration",
+    "discharge_duration",
+    "energy",
+    "power"
+  ]
+}

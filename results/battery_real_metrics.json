@@ -1,0 +1,80 @@
+{
+  "dataset_file": "battery_cycle_level_dataset_CLEAN_FINAL.csv",
+  "dataset_rows": 1415,
+  "unique_batteries": 34,
+  "missing_values": {
+    "battery_id": 0,
+    "cycle": 0,
+    "voltage": 0,
+    "temperature": 0,
+    "capacity": 0,
+    "soh": 0,
+    "rul": 0
+  },
+  "duplicate_rows": 0,
+  "features": [
+    "cycle",
+    "voltage",
+    "temperature",
+    "capacity",
+    "rul"
+  ],
+  "target": "soh",
+  "seed": 42,
+  "split_method": "battery-level train/validation/test split",
+  "train_records": 1138,
+  "val_records": 106,
+  "test_records": 171,
+  "train_batteries": [
+    "B0033",
+    "B0055",
+    "B0030",
+    "B0005",
+    "B0025",
+    "B0039",
+    "B0040",
+    "B0026",
+    "B0034",
+    "B0032",
+    "B0006",
+    "B0007",
+    "B0053",
+    "B0018",
+    "B0052",
+    "B0046",
+    "B0054",
+    "B0045",
+    "B0041",
+    "B0048",
+    "B0027",
+    "B0043",
+    "B0056",
+    "B0028",
+    "B0031",
+    "B0036",
+    "B0051"
+  ],
+  "val_batteries": [
+    "B0029",
+    "B0049",
+    "B0044"
+  ],
+  "test_batteries": [
+    "B0038",
+    "B0042",
+    "B0047",
+    "B0050"
+  ],
+  "lstm_test_sequences": 150,
+  "lstm": {
+    "MAE": 0.059310443699359894,
+    "RMSE": 0.0851678767053976,
+    "R2": 0.4236375093460083
+  },
+  "xgboost": {
+    "MAE": 0.08031409233808517,
+    "RMSE": 0.13642707092287235,
+    "R2": -0.30989551544189453
+  },
+  "claim_under_1_5_pct": false
+}

@@ -1,0 +1,361 @@
+{
+  "dataset_audit": {
+    "soh_scale_min": 0.604448676087178,
+    "soh_scale_max": 1.0485271606255615,
+    "capacity_over_first_capacity_mae_fraction": 3.758281475586219e-17,
+    "capacity_over_first_capacity_max_abs_error_fraction": 4.440892098500626e-16,
+    "capacity_over_first_capacity_exact_all_rows": true,
+    "rul_equals_max_cycle_minus_cycle_rows": 1415,
+    "rul_equals_max_cycle_minus_cycle_fraction": 1.0,
+    "interpretation": "SOH is capacity divided by the battery's first recorded capacity. RUL equals final observed cycle minus current cycle and leaks future information."
+  },
+  "unseen_battery": {
+    "protocol": "GroupShuffleSplit by battery ID (train/validation/test); test rows exclude cycle 1; features cycle, voltage, temperature, and first-cycle capacity; current capacity and RUL excluded.",
+    "validation_winner": {
+      "formulation": "direct_soh",
+      "model": "hist_gradient_boosting",
+      "mae_fraction": 0.03612092179087743,
+      "mae_percentage_points": 3.6120921790877434,
+      "rmse_fraction": 0.04676502042145233,
+      "rmse_percentage_points": 4.676502042145233,
+      "r2": 0.7840068171548884,
+      "rows": 460
+    },
+    "test": {
+      "mae_fraction": 0.048500748124080464,
+      "mae_percentage_points": 4.850074812408047,
+      "rmse_fraction": 0.0845809983876961,
+      "rmse_percentage_points": 8.458099838769611,
+      "r2": 0.5443436257990777,
+      "rows": 358
+    },
+    "test_batteries": [
+      "B0005",
+      "B0029",
+      "B0030",
+      "B0032",
+      "B0042",
+      "B0050"
+    ],
+    "test_rows": 358,
+    "group_kfold_5_fold": {
+      "protocol": "5-fold GroupKFold; each battery is held out once; cycle 1 is excluded; HistGradientBoosting direct SOH regression.",
+      "folds": [
+        {
+          "fold": 1,
+          "metrics": {
+            "mae_fraction": 0.028407684684212894,
+            "mae_percentage_points": 2.8407684684212895,
+            "rmse_fraction": 0.03546898953457126,
+            "rmse_percentage_points": 3.5468989534571262,
+            "r2": 0.8869361240636336,
+            "rows": 278
+          },
+          "test_batteries": [
+            "B0005",
+            "B0025",
+            "B0027",
+            "B0028",
+            "B0048"
+          ]
+        },
+        {
+          "fold": 2,
+          "metrics": {
+            "mae_fraction": 0.024721703006369604,
+            "mae_percentage_points": 2.4721703006369604,
+            "rmse_fraction": 0.030487054877491124,
+            "rmse_percentage_points": 3.0487054877491127,
+            "r2": 0.8768667591423003,
+            "rows": 277
+          },
+          "test_batteries": [
+            "B0007",
+            "B0029",
+            "B0033",
+            "B0039",
+            "B0044"
+          ]
+        },
+        {
+          "fold": 3,
+          "metrics": {
+            "mae_fraction": 0.05605076926560171,
+            "mae_percentage_points": 5.605076926560171,
+            "rmse_fraction": 0.07225667103791092,
+            "rmse_percentage_points": 7.225667103791092,
+            "r2": 0.7022101997118972,
+            "rows": 276
+          },
+          "test_batteries": [
+            "B0006",
+            "B0030",
+            "B0031",
+            "B0047",
+            "B0050"
+          ]
+        },
+        {
+          "fold": 4,
+          "metrics": {
+            "mae_fraction": 0.09057673227286542,
+            "mae_percentage_points": 9.057673227286541,
+            "rmse_fraction": 0.15243867067621833,
+            "rmse_percentage_points": 15.243867067621833,
+            "r2": -1.0112659028038595,
+            "rows": 276
+          },
+          "test_batteries": [
+            "B0018",
+            "B0040",
+            "B0041",
+            "B0046",
+            "B0049",
+            "B0053"
+          ]
+        },
+        {
+          "fold": 5,
+          "metrics": {
+            "mae_fraction": 0.09561968594218677,
+            "mae_percentage_points": 9.561968594218676,
+            "rmse_fraction": 0.1325741934858086,
+            "rmse_percentage_points": 13.257419348580859,
+            "r2": 0.07535846781449629,
+            "rows": 277
+          },
+          "test_batteries": [
+            "B0026",
+            "B0032",
+            "B0042",
+            "B0043",
+            "B0045"
+          ]
+        }
+      ],
+      "mean_mae_percentage_points": 5.907531503424728,
+      "std_mae_percentage_points": 3.338282650126216
+    },
+    "capacity_ratio_calculation_baseline": {
+      "mae_fraction": 5.1169496945014197e-17,
+      "mae_percentage_points": 5.11694969450142e-15,
+      "rmse_fraction": 9.071261088492967e-17,
+      "rmse_percentage_points": 9.071261088492966e-15,
+      "r2": 1.0,
+      "rows": 358
+    },
+    "capacity_ratio_baseline_label": "direct calculation using current capacity; not an ML forecast"
+  },
+  "known_battery_future_cycles": {
+    "protocol": "Within each eligible battery, earliest 60% of observations train, next 20% validate, final 20% test. Final model selection/training/testing use exact consecutive-cycle transitions only. The broader next-record score is separately reported and can include gaps. Test features use only prior cycles.",
+    "selected_model": "gradient_boosting",
+    "selected_formulation": "degradation",
+    "validation": {
+      "formulation": "degradation",
+      "model": "gradient_boosting",
+      "mae_fraction": 0.0060312907440519285,
+      "mae_percentage_points": 0.6031290744051928,
+      "rmse_fraction": 0.011655465909905419,
+      "rmse_percentage_points": 1.1655465909905418,
+      "r2": 0.9893072262598386,
+      "rows": 270
+    },
+    "test": {
+      "mae_fraction": 0.006951996067044132,
+      "mae_percentage_points": 0.6951996067044132,
+      "rmse_fraction": 0.014587356344485467,
+      "rmse_percentage_points": 1.4587356344485467,
+      "r2": 0.9837910628526646,
+      "rows": 288
+    },
+    "exact_one_physical_cycle_test": {
+      "mae_fraction": 0.005716189309342849,
+      "mae_percentage_points": 0.571618930934285,
+      "rmse_fraction": 0.011323421308271162,
+      "rmse_percentage_points": 1.1323421308271162,
+      "r2": 0.9896803704605779,
+      "rows": 280
+    },
+    "exact_one_physical_cycle_test_batteries": [
+      "B0005",
+      "B0006",
+      "B0007",
+      "B0018",
+      "B0026",
+      "B0027",
+      "B0028",
+      "B0029",
+      "B0030",
+      "B0031",
+      "B0032",
+      "B0039",
+      "B0041",
+      "B0042",
+      "B0043",
+      "B0044",
+      "B0045",
+      "B0046",
+      "B0047",
+      "B0048",
+      "B0049",
+      "B0053"
+    ],
+    "exact_one_physical_cycle_coverage": {
+      "rows": 280,
+      "all_test_rows": 288,
+      "fraction": 0.9722222222222222
+    },
+    "test_batteries": [
+      "B0005",
+      "B0006",
+      "B0007",
+      "B0018",
+      "B0025",
+      "B0026",
+      "B0027",
+      "B0028",
+      "B0029",
+      "B0030",
+      "B0031",
+      "B0032",
+      "B0039",
+      "B0041",
+      "B0042",
+      "B0043",
+      "B0044",
+      "B0045",
+      "B0046",
+      "B0047",
+      "B0048",
+      "B0049",
+      "B0053"
+    ],
+    "eligible_batteries": [
+      "B0005",
+      "B0006",
+      "B0007",
+      "B0018",
+      "B0025",
+      "B0026",
+      "B0027",
+      "B0028",
+      "B0029",
+      "B0030",
+      "B0031",
+      "B0032",
+      "B0039",
+      "B0041",
+      "B0042",
+      "B0043",
+      "B0044",
+      "B0045",
+      "B0046",
+      "B0047",
+      "B0048",
+      "B0049",
+      "B0053"
+    ],
+    "excluded_batteries": {
+      "B0033": {
+        "cycles": 3,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0034": {
+        "cycles": 1,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0036": {
+        "cycles": 1,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0038": {
+        "cycles": 1,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0040": {
+        "cycles": 2,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0050": {
+        "cycles": 2,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0051": {
+        "cycles": 1,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0052": {
+        "cycles": 1,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0054": {
+        "cycles": 1,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0055": {
+        "cycles": 1,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      },
+      "B0056": {
+        "cycles": 1,
+        "reason": "fewer than five observations for train/validation/test chronology"
+      }
+    },
+    "train_rows": 831,
+    "validation_rows": 281,
+    "test_rows": 288,
+    "exact_one_cycle_train_rows": 790,
+    "exact_one_cycle_validation_rows": 270,
+    "exact_one_cycle_test_rows": 280,
+    "capacity_ratio_calculation_baseline": {
+      "mae_fraction": 3.161051667335515e-17,
+      "mae_percentage_points": 3.161051667335515e-15,
+      "rmse_fraction": 7.046005543709292e-17,
+      "rmse_percentage_points": 7.046005543709292e-15,
+      "r2": 1.0,
+      "rows": 288
+    },
+    "capacity_ratio_baseline_label": "same-cycle capacity calculation; diagnostic only, not a future forecast",
+    "persistence_baseline_validation": {
+      "mae_fraction": 0.009174056841066904,
+      "mae_percentage_points": 0.9174056841066903,
+      "rmse_fraction": 0.020031148022662027,
+      "rmse_percentage_points": 2.003114802266203,
+      "r2": 0.9689667006256215,
+      "rows": 281
+    },
+    "persistence_baseline_test": {
+      "mae_fraction": 0.008045887807643969,
+      "mae_percentage_points": 0.8045887807643969,
+      "rmse_fraction": 0.013235425564200855,
+      "rmse_percentage_points": 1.3235425564200856,
+      "r2": 0.9866562722138783,
+      "rows": 288
+    },
+    "exact_one_physical_cycle_persistence_baseline_validation": {
+      "mae_fraction": 0.007100048387466803,
+      "mae_percentage_points": 0.7100048387466803,
+      "rmse_fraction": 0.01148603402030075,
+      "rmse_percentage_points": 1.148603402030075,
+      "r2": 0.9896158417774676,
+      "rows": 270
+    },
+    "exact_one_physical_cycle_persistence_baseline_test": {
+      "mae_fraction": 0.007140169816226667,
+      "mae_percentage_points": 0.7140169816226667,
+      "rmse_fraction": 0.011085645728481875,
+      "rmse_percentage_points": 1.1085645728481874,
+      "r2": 0.9901092149160673,
+      "rows": 280
+    },
+    "exact_one_cycle_mae_improvement_over_persistence_percentage": 19.943230252699255,
+    "mae_improvement_over_persistence_percentage": 13.595662365072863
+  },
+  "model_availability": {
+    "catboost": "not installed; not run",
+    "deep_temporal_architectures": "not yet run; tree/linear/MLP validation benchmark selects next step"
+  },
+  "claim_under_1_5_percentage_points": true,
+  "final_model_path": "backend\\ml_models\\artifacts\\final_battery_model.joblib",
+  "metrics_path": "results\\final_battery\\final_battery_metrics.json"
+}
