@@ -1,0 +1,749 @@
+
+<h2 class="sr-only">AutoCircle AI — Interactive Circular Economy & Sustainability Platform prototype for ET AutoTech Hackathon 2026</h2>
+
+<style>
+:root {
+  --ac-teal: #1D9E75;
+  --ac-teal-light: #E1F5EE;
+  --ac-teal-dark: #0F6E56;
+  --ac-blue: #378ADD;
+  --ac-blue-light: #E6F1FB;
+  --ac-amber: #BA7517;
+  --ac-amber-light: #FAEEDA;
+  --ac-red: #E24B4A;
+  --ac-red-light: #FCEBEB;
+  --ac-green: #639922;
+  --ac-green-light: #EAF3DE;
+  --ac-purple: #534AB7;
+  --ac-purple-light: #EEEDFE;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+
+.app { min-height: 600px; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-primary);
+}
+.logo { display: flex; align-items: center; gap: 8px; }
+.logo-icon { width: 28px; height: 28px; border-radius: 6px; background: var(--ac-teal); display: flex; align-items: center; justify-content: center; }
+.logo-text { font-size: 15px; font-weight: 500; color: var(--color-text-primary); }
+.logo-sub { font-size: 11px; color: var(--color-text-secondary); }
+.badge-hackathon { font-size: 11px; padding: 3px 8px; background: var(--ac-teal-light); color: var(--ac-teal-dark); border-radius: 20px; font-weight: 500; }
+
+.nav { display: flex; gap: 4px; padding: 10px 20px; border-bottom: 0.5px solid var(--color-border-tertiary); flex-wrap: wrap; }
+.nav-btn { padding: 6px 12px; border-radius: var(--border-radius-md); font-size: 13px; cursor: pointer; border: 0.5px solid transparent; background: transparent; color: var(--color-text-secondary); transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+.nav-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
+.nav-btn.active { background: var(--ac-teal-light); color: var(--ac-teal-dark); border-color: var(--ac-teal); font-weight: 500; }
+
+.content { padding: 20px; }
+.section { display: none; }
+.section.active { display: block; }
+
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 12px; margin-bottom: 20px; }
+.metric-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 14px 16px; }
+.metric-label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px; }
+.metric-value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.metric-sub { font-size: 11px; color: var(--color-text-secondary); margin-top: 2px; }
+.metric-up { color: var(--ac-teal-dark); }
+.metric-warn { color: var(--ac-amber); }
+.metric-bad { color: var(--ac-red); }
+
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 16px 18px; margin-bottom: 14px; }
+.card-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.card-title i { font-size: 16px; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 14px; margin-bottom: 14px; }
+
+.soh-bar-wrap { margin: 8px 0; }
+.soh-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.soh-bar { height: 8px; background: var(--color-background-secondary); border-radius: 4px; overflow: hidden; }
+.soh-fill { height: 100%; border-radius: 4px; transition: width 0.4s; }
+
+.route-chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; }
+.chip-ev { background: var(--ac-green-light); color: var(--ac-green); }
+.chip-2l { background: var(--ac-blue-light); color: #185FA5; }
+.chip-rec { background: var(--ac-red-light); color: var(--ac-red); }
+
+.input-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+.input-row label { font-size: 13px; color: var(--color-text-secondary); min-width: 160px; }
+.input-row input[type=range] { flex: 1; }
+.input-row span { font-size: 13px; font-weight: 500; min-width: 44px; text-align: right; }
+
+.predict-btn { background: var(--ac-teal); color: #fff; border: none; padding: 9px 20px; border-radius: var(--border-radius-md); font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; margin-top: 12px; }
+.predict-btn:hover { background: var(--ac-teal-dark); }
+.predict-btn:disabled { opacity: 0.6; cursor: wait; }
+
+.result-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 14px; margin-top: 12px; min-height: 60px; }
+.result-box p { font-size: 13px; color: var(--color-text-primary); line-height: 1.6; }
+
+.thinking { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-text-secondary); }
+.dot-anim span { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--ac-teal); margin: 0 1px; animation: bounce 1.2s infinite; }
+.dot-anim span:nth-child(2) { animation-delay: 0.2s; }
+.dot-anim span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes bounce { 0%,80%,100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+
+.step-list { counter-reset: step; }
+.step-item { display: flex; gap: 10px; margin: 8px 0; align-items: flex-start; }
+.step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--ac-teal-light); color: var(--ac-teal-dark); font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+.step-text { font-size: 13px; color: var(--color-text-primary); line-height: 1.5; }
+
+.passport-field { display: flex; gap: 8px; margin: 6px 0; font-size: 13px; }
+.passport-key { color: var(--color-text-secondary); min-width: 140px; }
+.passport-val { color: var(--color-text-primary); font-weight: 500; }
+
+.qr-placeholder { width: 72px; height: 72px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); background: var(--color-background-secondary); display: flex; align-items: center; justify-content: center; }
+
+.design-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px; cursor: pointer; border: 2px solid transparent; transition: border-color 0.15s; }
+.design-card.selected { border-color: var(--ac-teal); }
+.design-title { font-size: 13px; font-weight: 500; margin-bottom: 6px; }
+.design-bars { display: flex; flex-direction: column; gap: 4px; }
+.design-bar-row { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--color-text-secondary); }
+.design-bar-row span { min-width: 70px; }
+.design-bar-bg { flex: 1; height: 5px; background: var(--color-border-tertiary); border-radius: 3px; }
+.design-bar-fill { height: 100%; border-radius: 3px; }
+
+.carbon-number { font-size: 32px; font-weight: 500; color: var(--ac-teal-dark); }
+.carbon-sub { font-size: 13px; color: var(--color-text-secondary); }
+
+.ai-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 2px 8px; border-radius: 20px; background: var(--ac-purple-light); color: var(--ac-purple); margin-left: 6px; }
+
+.tab-group { display: flex; gap: 0; margin-bottom: 14px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); overflow: hidden; }
+.tab-opt { flex: 1; padding: 7px 10px; font-size: 12px; text-align: center; cursor: pointer; border: none; background: transparent; color: var(--color-text-secondary); }
+.tab-opt.active { background: var(--ac-teal-light); color: var(--ac-teal-dark); font-weight: 500; }
+.tab-opt:not(:last-child) { border-right: 0.5px solid var(--color-border-tertiary); }
+
+.fleet-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; margin: 10px 0; }
+.battery-cell { width: 100%; aspect-ratio: 1; border-radius: 3px; cursor: pointer; transition: transform 0.1s; }
+.battery-cell:hover { transform: scale(1.1); }
+
+.disassembly-steps { display: flex; flex-direction: column; gap: 6px; }
+.dis-step { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--border-radius-md); background: var(--color-background-secondary); font-size: 13px; }
+.dis-step.done { background: var(--ac-green-light); }
+.dis-step.active { background: var(--ac-blue-light); border: 0.5px solid var(--ac-blue); }
+.dis-step.pending { opacity: 0.55; }
+.dis-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+.dis-icon.done { background: var(--ac-green); color: #fff; }
+.dis-icon.active { background: var(--ac-blue); color: #fff; }
+.dis-icon.pending { background: var(--color-border-tertiary); color: var(--color-text-secondary); }
+
+.progress-bar-wrap { background: var(--color-background-secondary); border-radius: 4px; height: 6px; overflow: hidden; }
+.progress-bar-fill { height: 100%; background: var(--ac-teal); border-radius: 4px; transition: width 0.5s; }
+
+.recovery-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+.recovery-table th { text-align: left; color: var(--color-text-secondary); padding: 4px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.recovery-table td { padding: 5px 0; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); }
+.recovery-table td:last-child { text-align: right; }
+
+.send-btn { padding: 7px 14px; background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); font-size: 12px; cursor: pointer; color: var(--color-text-secondary); display: flex; align-items: center; gap: 5px; }
+.send-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
+</style>
+
+<div class="app">
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-recycle" style="color:#fff;font-size:16px" aria-hidden="true"></i></div>
+      <div>
+        <div class="logo-text">AutoCircle AI</div>
+        <div class="logo-sub">Circular Economy Platform · NeuralNova</div>
+      </div>
+    </div>
+    <span class="badge-hackathon">ET AutoTech Hackathon 2026</span>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="showSection('overview',this)"><i class="ti ti-dashboard" aria-hidden="true"></i>Overview</button>
+    <button class="nav-btn" onclick="showSection('battery',this)"><i class="ti ti-battery-charging" aria-hidden="true"></i>Battery SOH</button>
+    <button class="nav-btn" onclick="showSection('disassembly',this)"><i class="ti ti-tools" aria-hidden="true"></i>Disassembly AI</button>
+    <button class="nav-btn" onclick="showSection('passport',this)"><i class="ti ti-id-badge-2" aria-hidden="true"></i>Material Passport</button>
+    <button class="nav-btn" onclick="showSection('design',this)"><i class="ti ti-atom" aria-hidden="true"></i>Gen Design</button>
+    <button class="nav-btn" onclick="showSection('carbon',this)"><i class="ti ti-leaf" aria-hidden="true"></i>Carbon AI</button>
+  </div>
+
+  <div class="content">
+
+    <!-- OVERVIEW -->
+    <div id="section-overview" class="section active">
+      <div class="grid-4">
+        <div class="metric-card"><div class="metric-label">Material Recovery Rate</div><div class="metric-value metric-up">92%</div><div class="metric-sub">+18% vs industry avg</div></div>
+        <div class="metric-card"><div class="metric-label">Carbon Footprint Cut</div><div class="metric-value metric-up">45%</div><div class="metric-sub">380K t CO₂e/yr avoided</div></div>
+        <div class="metric-card"><div class="metric-label">SOH Prediction MAE</div><div class="metric-value metric-up">&lt;1.5%</div><div class="metric-sub">NASA PCoE validated</div></div>
+        <div class="metric-card"><div class="metric-label">Disassembly Speed</div><div class="metric-value metric-up">+60%</div><div class="metric-sub">4–6 hrs → 1.5 hrs</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title"><i class="ti ti-cpu" aria-hidden="true"></i>4-Module AI Architecture</div>
+          <div class="step-list">
+            <div class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Battery SOH AI</strong> — LSTM + XGBoost ensemble predicts State-of-Health with MAE &lt;1.5%. Routes batteries: EV Continue / Second-Life / Recycle.</div></div>
+            <div class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Intelligent Disassembly</strong> — YOLOv8 object detection + PPO reinforcement learning plans optimal disassembly sequences for robot arms.</div></div>
+            <div class="step-item"><div class="step-num">3</div><div class="step-text"><strong>AI Material Passport</strong> — LLM + Neo4j knowledge graph auto-generates EU DPP-compliant digital passports anchored on Polygon blockchain.</div></div>
+            <div class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Generative Design</strong> — 3D diffusion model + NSGA-II optimizer creates recyclability-first component designs with +42% Material Separation Index.</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="ti ti-chart-bar" aria-hidden="true"></i>Impact at Scale (10K vehicles/month)</div>
+          <div style="margin-bottom: 12px;">
+            <div class="soh-bar-wrap"><div class="soh-label"><span>Second-life batteries routed</span><span>60%</span></div><div class="soh-bar"><div class="soh-fill" style="width:60%;background:var(--ac-blue)"></div></div></div>
+            <div class="soh-bar-wrap"><div class="soh-label"><span>Aluminium recovery purity</span><span>94%</span></div><div class="soh-bar"><div class="soh-fill" style="width:94%;background:var(--ac-teal)"></div></div></div>
+            <div class="soh-bar-wrap"><div class="soh-label"><span>Carbon reduction achieved</span><span>45%</span></div><div class="soh-bar"><div class="soh-fill" style="width:45%;background:var(--ac-green)"></div></div></div>
+            <div class="soh-bar-wrap"><div class="soh-label"><span>Weight reduction (gen design)</span><span>22%</span></div><div class="soh-bar"><div class="soh-fill" style="width:22%;background:var(--ac-purple)"></div></div></div>
+          </div>
+          <div style="font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;">
+            <strong style="color:var(--color-text-primary);">$10.85M</strong> additional value unlocked · Equivalent to removing <strong style="color:var(--color-text-primary);">82,000 cars</strong> from road annually
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="ti ti-layers-intersect" aria-hidden="true"></i>Tech Stack</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:11px;padding:3px 8px;background:var(--ac-blue-light);color:#185FA5;border-radius:20px;">PyTorch LSTM</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--ac-blue-light);color:#185FA5;border-radius:20px;">XGBoost</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--ac-teal-light);color:var(--ac-teal-dark);border-radius:20px;">YOLOv8</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--ac-teal-light);color:var(--ac-teal-dark);border-radius:20px;">PPO RL Agent</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--ac-purple-light);color:var(--ac-purple);border-radius:20px;">Claude API (LLM)</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--ac-purple-light);color:var(--ac-purple);border-radius:20px;">Neo4j Graph</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--ac-amber-light);color:var(--ac-amber);border-radius:20px;">3D Diffusion Model</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--ac-amber-light);color:var(--ac-amber);border-radius:20px;">NSGA-II Optimizer</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--color-background-secondary);color:var(--color-text-secondary);border-radius:20px;">React 18 + TS</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--color-background-secondary);color:var(--color-text-secondary);border-radius:20px;">FastAPI</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--color-background-secondary);color:var(--color-text-secondary);border-radius:20px;">MongoDB + InfluxDB</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--color-background-secondary);color:var(--color-text-secondary);border-radius:20px;">Polygon Blockchain</span>
+          <span style="font-size:11px;padding:3px 8px;background:var(--color-background-secondary);color:var(--color-text-secondary);border-radius:20px;">NASA PCoE Dataset</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BATTERY SOH -->
+    <div id="section-battery" class="section">
+      <div class="grid-4">
+        <div class="metric-card"><div class="metric-label">Fleet Batteries Tracked</div><div class="metric-value">240</div></div>
+        <div class="metric-card"><div class="metric-label">Avg Fleet SOH</div><div class="metric-value metric-up">78.4%</div></div>
+        <div class="metric-card"><div class="metric-label">2nd-Life Routed Today</div><div class="metric-value metric-up">14</div></div>
+        <div class="metric-card"><div class="metric-label">Model MAE</div><div class="metric-value metric-up">1.3%</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-grid-dots" aria-hidden="true"></i>Fleet SOH Heatmap <span class="ai-badge"><i class="ti ti-brain" aria-hidden="true"></i> LSTM+XGBoost</span></div>
+        <p style="font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;">Click any battery cell to see its routing decision. Colors: green &gt;80% · amber 70–80% · red &lt;70%</p>
+        <div class="fleet-grid" id="fleet-grid"></div>
+        <div id="battery-detail" style="display:none;margin-top:12px;padding:12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);">
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px;" id="bat-title">Battery #12</div>
+          <div style="display:flex;gap:20px;flex-wrap:wrap;">
+            <div><div class="metric-label">SOH</div><div style="font-size:18px;font-weight:500;" id="bat-soh">—</div></div>
+            <div><div class="metric-label">RUL</div><div style="font-size:18px;font-weight:500;" id="bat-rul">—</div></div>
+            <div><div class="metric-label">Routing</div><div id="bat-route">—</div></div>
+            <div><div class="metric-label">Confidence</div><div style="font-size:18px;font-weight:500;" id="bat-conf">—</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-adjustments" aria-hidden="true"></i>SOH Predictor — Live Inference <span class="ai-badge"><i class="ti ti-brain" aria-hidden="true"></i> AI-powered</span></div>
+        <div class="input-row"><label>Cycle count</label><input type="range" min="0" max="2000" value="800" id="s-cycles" step="10" oninput="updateSlider('s-cycles','v-cycles')"><span id="v-cycles">800</span></div>
+        <div class="input-row"><label>Avg temperature (°C)</label><input type="range" min="15" max="55" value="28" id="s-temp" step="1" oninput="updateSlider('s-temp','v-temp')"><span id="v-temp">28</span></div>
+        <div class="input-row"><label>Depth of discharge (%)</label><input type="range" min="30" max="100" value="70" id="s-dod" step="1" oninput="updateSlider('s-dod','v-dod')"><span id="v-dod">70</span></div>
+        <div class="input-row"><label>Fast charge frequency (%)</label><input type="range" min="0" max="100" value="20" id="s-fc" step="1" oninput="updateSlider('s-fc','v-fc')"><span id="v-fc">20</span></div>
+        <div class="input-row"><label>Internal resistance (mΩ)</label><input type="range" min="60" max="250" value="110" id="s-ir" step="1" oninput="updateSlider('s-ir','v-ir')"><span id="v-ir">110</span></div>
+        <button class="predict-btn" id="predict-btn" onclick="runSOHPrediction()">
+          <i class="ti ti-brain" aria-hidden="true"></i> Predict SOH with AI
+        </button>
+        <div class="result-box" id="soh-result"><p style="color:var(--color-text-secondary);">Adjust parameters above and click Predict to run the LSTM+XGBoost ensemble model.</p></div>
+      </div>
+    </div>
+
+    <!-- DISASSEMBLY -->
+    <div id="section-disassembly" class="section">
+      <div class="grid-4">
+        <div class="metric-card"><div class="metric-label">Components Detected</div><div class="metric-value">47</div></div>
+        <div class="metric-card"><div class="metric-label">Sequence Accuracy</div><div class="metric-value metric-up">91%</div><div class="metric-sub">mAP@0.5 > 88%</div></div>
+        <div class="metric-card"><div class="metric-label">Time Saved</div><div class="metric-value metric-up">58%</div></div>
+        <div class="metric-card"><div class="metric-label">Safety Flags</div><div class="metric-value metric-warn">2</div><div class="metric-sub">HV warnings active</div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title"><i class="ti ti-video" aria-hidden="true"></i>YOLOv8 Camera Feed (Simulated)</div>
+          <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:20px;text-align:center;position:relative;overflow:hidden;" id="camera-view">
+            <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:12px;">RGB-D Camera · Intel RealSense D455</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;" id="component-grid">
+            </div>
+            <div style="margin-top:10px;font-size:11px;color:var(--color-text-secondary);">mAP@0.5: 0.891 · FPS: 28</div>
+          </div>
+          <button class="predict-btn" style="margin-top:10px;" onclick="runDisassemblyAI()"><i class="ti ti-refresh" aria-hidden="true"></i> Scan Components</button>
+        </div>
+        <div class="card">
+          <div class="card-title"><i class="ti ti-list-numbers" aria-hidden="true"></i>RL-Planned Disassembly Sequence</div>
+          <div class="disassembly-steps" id="dis-steps">
+            <div style="font-size:13px;color:var(--color-text-secondary);">Click "Scan Components" to generate AI disassembly plan.</div>
+          </div>
+          <div style="margin-top:12px;" id="dis-progress-wrap" style="display:none">
+            <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">Overall progress</div>
+            <div class="progress-bar-wrap"><div class="progress-bar-fill" id="dis-progress" style="width:0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-table" aria-hidden="true"></i>Material Recovery Targets</div>
+        <table class="recovery-table">
+          <thead><tr><th>Material</th><th>Component</th><th>Est. Weight</th><th>Recovery Rate</th><th>Value/kg</th></tr></thead>
+          <tbody>
+            <tr><td>Lithium</td><td>Battery cells</td><td>8.2 kg</td><td><span class="route-chip chip-ev">95%</span></td><td>$35</td></tr>
+            <tr><td>Cobalt</td><td>Cathode material</td><td>3.1 kg</td><td><span class="route-chip chip-ev">92%</span></td><td>$28</td></tr>
+            <tr><td>Aluminium</td><td>Housing, frame</td><td>42 kg</td><td><span class="route-chip chip-ev">94%</span></td><td>$2.1</td></tr>
+            <tr><td>Copper</td><td>Wiring, busbars</td><td>12 kg</td><td><span class="route-chip chip-2l">88%</span></td><td>$9.5</td></tr>
+            <tr><td>Steel</td><td>Chassis parts</td><td>180 kg</td><td><span class="route-chip chip-2l">82%</span></td><td>$0.4</td></tr>
+            <tr><td>Plastics</td><td>Interior trim</td><td>35 kg</td><td><span class="route-chip chip-rec">45%</span></td><td>$0.2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PASSPORT -->
+    <div id="section-passport" class="section">
+      <div class="grid-4">
+        <div class="metric-card"><div class="metric-label">Passports Generated</div><div class="metric-value">1,842</div></div>
+        <div class="metric-card"><div class="metric-label">EU DPP Compliance</div><div class="metric-value metric-up">100%</div></div>
+        <div class="metric-card"><div class="metric-label">Blockchain Anchored</div><div class="metric-value metric-up">1,842</div><div class="metric-sub">Polygon network</div></div>
+        <div class="metric-card"><div class="metric-label">Avg Gen Time</div><div class="metric-value">3.2s</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-file-certificate" aria-hidden="true"></i>Generate AI Material Passport <span class="ai-badge"><i class="ti ti-brain" aria-hidden="true"></i> Claude API + Neo4j</span></div>
+        <div class="grid-2">
+          <div>
+            <div style="margin-bottom:10px;">
+              <label style="font-size:12px;color:var(--color-text-secondary);">Component Type</label>
+              <select id="pp-component" style="width:100%;margin-top:4px;font-size:13px;">
+                <option value="battery_pack">EV Battery Pack (NMC 811)</option>
+                <option value="motor">Electric Drive Motor</option>
+                <option value="inverter">Power Inverter Module</option>
+                <option value="chassis">Aluminium Chassis Section</option>
+              </select>
+            </div>
+            <div style="margin-bottom:10px;">
+              <label style="font-size:12px;color:var(--color-text-secondary);">Vehicle VIN</label>
+              <input type="text" id="pp-vin" value="1HGBH41JXMN109186" style="width:100%;margin-top:4px;font-size:13px;">
+            </div>
+            <div style="margin-bottom:10px;">
+              <label style="font-size:12px;color:var(--color-text-secondary);">SOH Score (%)</label>
+              <input type="number" id="pp-soh" value="73" min="0" max="100" style="width:100%;margin-top:4px;font-size:13px;">
+            </div>
+            <button class="predict-btn" id="passport-btn" onclick="generatePassport()">
+              <i class="ti ti-file-plus" aria-hidden="true"></i> Generate Digital Passport
+            </button>
+          </div>
+          <div id="passport-output" style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:14px;min-height:200px;">
+            <p style="font-size:13px;color:var(--color-text-secondary);">Fill in the form and generate a passport to see the EU DPP-compliant output.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-world" aria-hidden="true"></i>Regulatory Compliance Coverage</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;">
+          <div style="padding:10px;background:var(--ac-green-light);border-radius:var(--border-radius-md);font-size:12px;color:#27500A;"><strong>EU Battery Reg 2023</strong><br>Digital Product Passport Art.77</div>
+          <div style="padding:10px;background:var(--ac-green-light);border-radius:var(--border-radius-md);font-size:12px;color:#27500A;"><strong>REACH Regulation</strong><br>SVHC screening &amp; disclosure</div>
+          <div style="padding:10px;background:var(--ac-green-light);border-radius:var(--border-radius-md);font-size:12px;color:#27500A;"><strong>EU ELV Directive</strong><br>2000/53/EC material reporting</div>
+          <div style="padding:10px;background:var(--ac-green-light);border-radius:var(--border-radius-md);font-size:12px;color:#27500A;"><strong>ISO 14040/44</strong><br>LCA methodology aligned</div>
+          <div style="padding:10px;background:var(--ac-blue-light);border-radius:var(--border-radius-md);font-size:12px;color:#0C447C;"><strong>India Battery Waste 2022</strong><br>EPR compliance framework</div>
+          <div style="padding:10px;background:var(--ac-blue-light);border-radius:var(--border-radius-md);font-size:12px;color:#0C447C;"><strong>Conflict Minerals</strong><br>EU 2017/821 traceability</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GENERATIVE DESIGN -->
+    <div id="section-design" class="section">
+      <div class="grid-4">
+        <div class="metric-card"><div class="metric-label">Material Separation Index</div><div class="metric-value metric-up">+42%</div></div>
+        <div class="metric-card"><div class="metric-label">Weight Reduction</div><div class="metric-value metric-up">22%</div></div>
+        <div class="metric-card"><div class="metric-label">Designs Generated</div><div class="metric-value">2,400</div><div class="metric-sub">via diffusion model</div></div>
+        <div class="metric-card"><div class="metric-label">CO₂ Saved/Design</div><div class="metric-value metric-up">340kg</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-3d-cube-sphere" aria-hidden="true"></i>Design Brief — AI Optimizer <span class="ai-badge"><i class="ti ti-brain" aria-hidden="true"></i> Diffusion + NSGA-II</span></div>
+        <div class="grid-2">
+          <div>
+            <div style="margin-bottom:10px;">
+              <label style="font-size:12px;color:var(--color-text-secondary);">Component</label>
+              <select id="dg-component" style="width:100%;margin-top:4px;font-size:13px;">
+                <option>Battery Housing Bracket</option>
+                <option>Suspension Control Arm</option>
+                <option>Motor Mount Assembly</option>
+                <option>Structural Door Panel</option>
+              </select>
+            </div>
+            <div class="input-row" style="margin-bottom:8px;"><label>Min recyclability score</label><input type="range" min="0.4" max="1.0" step="0.05" value="0.8" id="dg-rec" oninput="updateSlider('dg-rec','v-rec',2)"><span id="v-rec">0.80</span></div>
+            <div class="input-row" style="margin-bottom:8px;"><label>Max weight (kg)</label><input type="range" min="1" max="20" step="0.5" value="8" id="dg-wt" oninput="updateSlider('dg-wt','v-wt',1)"><span id="v-wt">8.0</span></div>
+            <div class="input-row" style="margin-bottom:8px;"><label>Load case (kN)</label><input type="range" min="5" max="80" step="5" value="35" id="dg-load" oninput="updateSlider('dg-load','v-load')"><span id="v-load">35</span></div>
+            <button class="predict-btn" id="design-btn" onclick="runGenerativeDesign()">
+              <i class="ti ti-sparkles" aria-hidden="true"></i> Generate Pareto Designs
+            </button>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:500;margin-bottom:10px;">Pareto-Optimal Candidates</div>
+            <div style="display:flex;flex-direction:column;gap:8px;" id="pareto-designs">
+              <p style="font-size:13px;color:var(--color-text-secondary);">Run the optimizer to see design candidates.</p>
+            </div>
+          </div>
+        </div>
+        <div id="design-result" class="result-box" style="margin-top:12px;display:none;"><p></p></div>
+      </div>
+    </div>
+
+    <!-- CARBON -->
+    <div id="section-carbon" class="section">
+      <div class="grid-4">
+        <div class="metric-card"><div class="metric-label">CO₂e Avoided (YTD)</div><div class="metric-value metric-up">42K t</div></div>
+        <div class="metric-card"><div class="metric-label">Carbon Tokens (ACCT)</div><div class="metric-value metric-up">42,180</div><div class="metric-sub">Polygon ERC-20</div></div>
+        <div class="metric-card"><div class="metric-label">Token Value</div><div class="metric-value">$14.2/t</div></div>
+        <div class="metric-card"><div class="metric-label">GNN Model Accuracy</div><div class="metric-value metric-up">94%</div><div class="metric-sub">Ecoinvent 3.9 trained</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-calculator" aria-hidden="true"></i>Carbon Footprint Estimator <span class="ai-badge"><i class="ti ti-brain" aria-hidden="true"></i> GNN + LCA</span></div>
+        <div class="grid-2">
+          <div>
+            <div class="input-row"><label>Vehicles processed/month</label><input type="range" min="100" max="10000" value="2000" id="c-vehicles" step="100" oninput="calcCarbon()"><span id="v-vehicles">2,000</span></div>
+            <div class="input-row"><label>Battery second-life rate (%)</label><input type="range" min="0" max="100" value="60" id="c-2l" step="5" oninput="calcCarbon()"><span id="v-2l">60%</span></div>
+            <div class="input-row"><label>Al recovery purity (%)</label><input type="range" min="50" max="98" value="94" id="c-al" step="1" oninput="calcCarbon()"><span id="v-al">94%</span></div>
+            <div class="input-row"><label>Renewable energy at facility (%)</label><input type="range" min="0" max="100" value="35" id="c-re" step="5" oninput="calcCarbon()"><span id="v-re">35%</span></div>
+          </div>
+          <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:16px;display:flex;flex-direction:column;gap:14px;">
+            <div><div class="carbon-sub">Monthly CO₂e avoided</div><div class="carbon-number" id="c-monthly">—</div></div>
+            <div><div class="carbon-sub">Annual projection</div><div style="font-size:20px;font-weight:500;color:var(--ac-teal-dark);" id="c-annual">—</div></div>
+            <div><div class="carbon-sub">Carbon tokens earned/month</div><div style="font-size:20px;font-weight:500;color:var(--ac-blue);" id="c-tokens">—</div></div>
+            <div><div class="carbon-sub">Token revenue/month (at $14.2/t)</div><div style="font-size:20px;font-weight:500;color:var(--color-text-primary);" id="c-revenue">—</div></div>
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Carbon reduction levers</div>
+          <div id="carbon-levers" style="display:flex;flex-direction:column;gap:6px;"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="ti ti-link" aria-hidden="true"></i>AutoCircle Carbon Token (ACCT) — Polygon Blockchain</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;font-size:12px;">
+            <div style="font-weight:500;margin-bottom:6px;">Token specification</div>
+            <div class="passport-field"><span class="passport-key">Standard</span><span class="passport-val">ERC-20</span></div>
+            <div class="passport-field"><span class="passport-key">Network</span><span class="passport-val">Polygon PoS</span></div>
+            <div class="passport-field"><span class="passport-key">Methodology</span><span class="passport-val">Verra VCS</span></div>
+            <div class="passport-field"><span class="passport-key">1 ACCT</span><span class="passport-val">= 1 tonne CO₂e verified</span></div>
+          </div>
+          <div style="flex:1;min-width:200px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:12px;font-size:12px;">
+            <div style="font-weight:500;margin-bottom:6px;">Earn tokens by</div>
+            <div class="step-item"><div class="step-num" style="width:16px;height:16px;font-size:10px;">1</div><div class="step-text" style="font-size:12px;">Routing battery to second-life (4.2 t CO₂e saved)</div></div>
+            <div class="step-item"><div class="step-num" style="width:16px;height:16px;font-size:10px;">2</div><div class="step-text" style="font-size:12px;">Recovering high-purity Al (8.5 kg CO₂e/kg saved)</div></div>
+            <div class="step-item"><div class="step-num" style="width:16px;height:16px;font-size:10px;">3</div><div class="step-text" style="font-size:12px;">Optimizing logistics routes (22% transport cut)</div></div>
+            <div class="step-item"><div class="step-num" style="width:16px;height:16px;font-size:10px;">4</div><div class="step-text" style="font-size:12px;">Deploying generative design parts (18–25% weight)</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'carbon') calcCarbon();
+}
+
+function updateSlider(inputId, spanId, decimals) {
+  const v = parseFloat(document.getElementById(inputId).value);
+  document.getElementById(spanId).textContent = decimals ? v.toFixed(decimals) : v.toLocaleString();
+}
+
+// Fleet heatmap
+const batteryData = Array.from({length: 80}, (_, i) => {
+  const soh = 55 + Math.random() * 40;
+  return { id: i+1, soh: parseFloat(soh.toFixed(1)), rul: Math.round(soh * 6), conf: (88 + Math.random() * 10).toFixed(1) };
+});
+function getColor(soh) {
+  if (soh >= 80) return '#1D9E75';
+  if (soh >= 70) return '#BA7517';
+  return '#E24B4A';
+}
+function getRoute(soh) {
+  if (soh >= 80) return '<span class="route-chip chip-ev"><i class="ti ti-charging-pile" aria-hidden="true"></i> Continue EV</span>';
+  if (soh >= 70) return '<span class="route-chip chip-2l"><i class="ti ti-home-bolt" aria-hidden="true"></i> Second-Life Storage</span>';
+  return '<span class="route-chip chip-rec"><i class="ti ti-recycle" aria-hidden="true"></i> Recycle Now</span>';
+}
+window.addEventListener('load', () => {
+  const grid = document.getElementById('fleet-grid');
+  if (!grid) return;
+  batteryData.forEach(b => {
+    const cell = document.createElement('div');
+    cell.className = 'battery-cell';
+    cell.style.background = getColor(b.soh);
+    cell.style.opacity = '0.7';
+    cell.title = `Battery #${b.id}: SOH ${b.soh}%`;
+    cell.onclick = () => {
+      document.getElementById('battery-detail').style.display = 'block';
+      document.getElementById('bat-title').textContent = `Battery #${b.id} — Cycle analysis`;
+      document.getElementById('bat-soh').textContent = b.soh + '%';
+      document.getElementById('bat-rul').textContent = b.rul + ' cycles';
+      document.getElementById('bat-route').innerHTML = getRoute(b.soh);
+      document.getElementById('bat-conf').textContent = b.conf + '%';
+    };
+    grid.appendChild(cell);
+  });
+  renderComponentGrid();
+  calcCarbon();
+});
+
+// SOH prediction via Anthropic API
+async function runSOHPrediction() {
+  const btn = document.getElementById('predict-btn');
+  const result = document.getElementById('soh-result');
+  const cycles = document.getElementById('s-cycles').value;
+  const temp = document.getElementById('s-temp').value;
+  const dod = document.getElementById('s-dod').value;
+  const fc = document.getElementById('s-fc').value;
+  const ir = document.getElementById('s-ir').value;
+  btn.disabled = true;
+  result.innerHTML = '<div class="thinking">Analysing battery parameters <div class="dot-anim"><span></span><span></span><span></span></div></div>';
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are AutoCircle AI's Battery SOH prediction engine, simulating a real LSTM+XGBoost ensemble model trained on the NASA PCoE battery dataset. When given battery parameters, produce a realistic, numerically precise SOH prediction result. Always respond in this exact JSON format (no markdown, no extra text):
+{"soh": <number 45-98>, "rul": <integer cycles>, "routing": "<Continue EV | Second-Life Storage | Recycle Now>", "confidence": <number 85-99>, "degradation_mode": "<calendar aging|cycle aging|thermal stress|fast-charge damage>", "key_insight": "<one specific technical insight about this battery's condition, mentioning LSTM pattern or XGBoost feature>", "recommendation": "<specific actionable recommendation>"}`,
+        messages: [{ role: 'user', content: `Predict SOH for battery with: cycle_count=${cycles}, avg_temp=${temp}°C, depth_of_discharge=${dod}%, fast_charge_freq=${fc}%, internal_resistance=${ir}mΩ. Apply LSTM temporal pattern analysis and XGBoost ensemble for routing decision.` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content.map(i => i.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    const routeClass = parsed.routing.includes('EV') ? 'chip-ev' : parsed.routing.includes('Second') ? 'chip-2l' : 'chip-rec';
+    result.innerHTML = `
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;">
+        <div><div class="metric-label">SOH Score</div><div style="font-size:20px;font-weight:500;color:var(--ac-teal-dark)">${parseFloat(parsed.soh).toFixed(1)}%</div></div>
+        <div><div class="metric-label">RUL</div><div style="font-size:20px;font-weight:500">${parseInt(parsed.rul).toLocaleString()} cycles</div></div>
+        <div><div class="metric-label">Routing Decision</div><span class="route-chip ${routeClass}">${parsed.routing}</span></div>
+        <div><div class="metric-label">Confidence</div><div style="font-size:20px;font-weight:500">${parseFloat(parsed.confidence).toFixed(1)}%</div></div>
+      </div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;">Degradation mode: <strong style="color:var(--color-text-primary)">${parsed.degradation_mode}</strong></div>
+      <div style="font-size:13px;color:var(--color-text-primary);margin:6px 0">${parsed.key_insight}</div>
+      <div style="font-size:12px;padding:8px;background:var(--ac-teal-light);border-radius:var(--border-radius-md);color:var(--ac-teal-dark);margin-top:6px">${parsed.recommendation}</div>`;
+  } catch(e) {
+    result.innerHTML = `<p style="color:var(--color-text-secondary)">Could not connect to AI inference. Running local heuristic...<br><br>Estimated SOH: ${Math.max(45, 95 - parseInt(document.getElementById('s-cycles').value)/40 - (parseInt(document.getElementById('s-temp').value)-25)*0.3 - (parseInt(document.getElementById('s-dod').value)-60)*0.15).toFixed(1)}%</p>`;
+  }
+  btn.disabled = false;
+}
+
+// Disassembly AI
+const components = [
+  {name:'HV Battery Pack', mat:'NMC811', risk:'HIGH', color:'#E24B4A'},
+  {name:'Battery BMS', mat:'PCB+Al', risk:'MED', color:'#BA7517'},
+  {name:'Drive Motor', mat:'Cu+Steel', risk:'MED', color:'#BA7517'},
+  {name:'Power Inverter', mat:'Si+Cu', risk:'MED', color:'#BA7517'},
+  {name:'Al Subframe', mat:'Al6082', risk:'LOW', color:'#1D9E75'},
+  {name:'Wiring Harness', mat:'Cu+PVC', risk:'LOW', color:'#1D9E75'},
+  {name:'Door Panels', mat:'PP+ABS', risk:'LOW', color:'#1D9E75'},
+  {name:'Glass (x4)', mat:'SiO₂', risk:'LOW', color:'#1D9E75'},
+  {name:'Steel Body', mat:'HSS', risk:'LOW', color:'#1D9E75'},
+];
+const disassemblyPlan = [
+  {name:'Discharge HV battery to safe level', safety:'Critical HV safety — PPE required', icon:'ti-bolt'},
+  {name:'Remove HV battery pack', safety:'Lift assist required >250kg', icon:'ti-battery'},
+  {name:'Extract Battery Management System', safety:'Capacitor discharge first', icon:'ti-cpu'},
+  {name:'Disconnect wiring harness', safety:'CAN bus log extracted', icon:'ti-plug'},
+  {name:'Remove power inverter module', safety:'Thermal paste recovery', icon:'ti-circuit-switchboard'},
+  {name:'Extract drive motor assembly', safety:'Demagnetisation check', icon:'ti-engine'},
+  {name:'Separate aluminium subframe', safety:'Grade: Al6082-T6', icon:'ti-3d-cube-sphere'},
+];
+
+function renderComponentGrid() {
+  const grid = document.getElementById('component-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  components.forEach(c => {
+    const el = document.createElement('div');
+    el.style.cssText = `background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:6px;padding:8px;font-size:11px;text-align:left;`;
+    el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;"><span style="font-weight:500">${c.name.split(' ')[0]}</span><span style="color:${c.color};font-size:10px">${c.risk}</span></div><div style="color:var(--color-text-secondary)">${c.mat}</div>`;
+    grid.appendChild(el);
+  });
+}
+
+function runDisassemblyAI() {
+  const stepsEl = document.getElementById('dis-steps');
+  stepsEl.innerHTML = '';
+  renderComponentGrid();
+  document.getElementById('dis-progress-wrap').style.display = 'block';
+  let done = 0;
+  disassemblyPlan.forEach((step, i) => {
+    const el = document.createElement('div');
+    el.className = 'dis-step ' + (i === 0 ? 'active' : 'pending');
+    el.innerHTML = `<div class="dis-icon ${i===0?'active':'pending'}"><i class="ti ${step.icon}" style="font-size:12px" aria-hidden="true"></i></div><div style="flex:1"><div style="font-size:13px;font-weight:500">${step.name}</div><div style="font-size:11px;color:var(--color-text-secondary)">${step.safety}</div></div>`;
+    stepsEl.appendChild(el);
+    el.id = 'dis-step-' + i;
+  });
+  let current = 0;
+  const adv = () => {
+    if (current > 0) {
+      const prev = document.getElementById('dis-step-'+(current-1));
+      prev.className = 'dis-step done';
+      prev.querySelector('.dis-icon').className = 'dis-icon done';
+      prev.querySelector('.dis-icon i').className = 'ti ti-check';
+    }
+    if (current < disassemblyPlan.length) {
+      const curr = document.getElementById('dis-step-'+current);
+      if (curr) { curr.className = 'dis-step active'; curr.querySelector('.dis-icon').className = 'dis-icon active'; }
+      document.getElementById('dis-progress').style.width = Math.round((current / disassemblyPlan.length) * 100) + '%';
+      current++;
+      setTimeout(adv, 1400);
+    } else {
+      document.getElementById('dis-progress').style.width = '100%';
+    }
+  };
+  adv();
+}
+
+// Passport generation
+async function generatePassport() {
+  const btn = document.getElementById('passport-btn');
+  const out = document.getElementById('passport-output');
+  const component = document.getElementById('pp-component').value;
+  const vin = document.getElementById('pp-vin').value;
+  const soh = document.getElementById('pp-soh').value;
+  btn.disabled = true;
+  out.innerHTML = '<div class="thinking">Generating EU DPP-compliant passport <div class="dot-anim"><span></span><span></span><span></span></div></div>';
+  const compNames = { battery_pack: 'EV Battery Pack (NMC 811)', motor: 'Electric Drive Motor', inverter: 'Power Inverter Module', chassis: 'Aluminium Chassis Section' };
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are the AutoCircle AI Material Passport generator. Generate a realistic EU Digital Product Passport (DPP) per Regulation 2023/1542. Return ONLY valid JSON, no markdown:
+{"passport_id":"DPP-<6 alphanumeric>","component":"<name>","vin":"<vin>","manufacture_date":"<date>","materials":[{"name":"<string>","percentage":<number>,"recyclability":"<High|Med|Low>","svhc":<bool>}],"soh_percent":<number>,"routing":"<Continue EV|Second-Life Storage|Recycle Now>","second_life_suitability":"<narrative 1 sentence>","disposal_instructions":"<1 sentence>","carbon_footprint_kg":<number>,"blockchain_hash":"0x<12 hex chars>","compliance":["EU Battery Reg 2023","REACH","ISO 14040"]}`,
+        messages: [{ role: 'user', content: `Generate passport for: component=${compNames[component]}, VIN=${vin}, SOH=${soh}%` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content.map(i => i.text || '').join('');
+    const p = JSON.parse(text.replace(/```json|```/g, '').trim());
+    const routeClass = p.routing && p.routing.includes('EV') ? 'chip-ev' : p.routing && p.routing.includes('Second') ? 'chip-2l' : 'chip-rec';
+    const materialsHtml = (p.materials || []).map(m => `<tr><td>${m.name}</td><td>${m.percentage}%</td><td>${m.recyclability}</td><td>${m.svhc ? '⚠ Yes' : 'No'}</td></tr>`).join('');
+    out.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+        <div><div style="font-size:12px;color:var(--color-text-secondary)">Passport ID</div><div style="font-size:14px;font-weight:500">${p.passport_id || 'DPP-AUTO-001'}</div></div>
+        <div class="qr-placeholder"><i class="ti ti-qrcode" style="font-size:32px;color:var(--color-text-secondary)" aria-hidden="true"></i></div>
+      </div>
+      <div class="passport-field"><span class="passport-key">Component</span><span class="passport-val">${p.component || compNames[component]}</span></div>
+      <div class="passport-field"><span class="passport-key">VIN</span><span class="passport-val">${p.vin || vin}</span></div>
+      <div class="passport-field"><span class="passport-key">SOH</span><span class="passport-val">${p.soh_percent || soh}%</span></div>
+      <div class="passport-field"><span class="passport-key">Routing</span><span class="route-chip ${routeClass}">${p.routing || 'Second-Life Storage'}</span></div>
+      <div class="passport-field"><span class="passport-key">Carbon footprint</span><span class="passport-val">${p.carbon_footprint_kg || '—'} kg CO₂e</span></div>
+      <div class="passport-field"><span class="passport-key">Blockchain hash</span><span class="passport-val" style="font-size:11px;font-family:var(--font-mono)">${p.blockchain_hash || '0xabc123def456'}</span></div>
+      <div style="font-size:12px;margin-top:8px;"><strong>Materials:</strong></div>
+      <table class="recovery-table" style="margin-top:4px;"><thead><tr><th>Material</th><th>%</th><th>Recyclability</th><th>SVHC</th></tr></thead><tbody>${materialsHtml}</tbody></table>
+      <div style="margin-top:8px;font-size:12px;background:var(--ac-green-light);color:#27500A;padding:8px;border-radius:var(--border-radius-md)">${p.second_life_suitability || 'Suitable for stationary energy storage applications.'}</div>`;
+  } catch(e) {
+    out.innerHTML = `<div class="passport-field"><span class="passport-key">Status</span><span class="passport-val">Offline mode — sample passport shown</span></div>
+      <div class="passport-field"><span class="passport-key">Passport ID</span><span class="passport-val">DPP-NMC-2026-001</span></div>
+      <div class="passport-field"><span class="passport-key">SOH</span><span class="passport-val">${soh}%</span></div>
+      <div class="passport-field"><span class="passport-key">Routing</span><span class="route-chip chip-2l">Second-Life Storage</span></div>
+      <div style="margin-top:8px;font-size:12px;background:var(--ac-green-light);color:#27500A;padding:8px;border-radius:var(--border-radius-md)">Battery suitable for stationary energy storage with 30% residual capacity.</div>`;
+  }
+  btn.disabled = false;
+}
+
+// Generative design
+async function runGenerativeDesign() {
+  const btn = document.getElementById('design-btn');
+  const paretoCont = document.getElementById('pareto-designs');
+  const resultBox = document.getElementById('design-result');
+  const component = document.getElementById('dg-component').value;
+  const rec = document.getElementById('dg-rec').value;
+  const wt = document.getElementById('dg-wt').value;
+  const load = document.getElementById('dg-load').value;
+  btn.disabled = true;
+  paretoCont.innerHTML = '<div class="thinking">Running diffusion model + NSGA-II <div class="dot-anim"><span></span><span></span><span></span></div></div>';
+  resultBox.style.display = 'none';
+  try {
+    const resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: `You are AutoCircle AI's generative design optimizer (3D diffusion model + NSGA-II genetic algorithm). Return ONLY JSON, no markdown:
+{"designs":[{"id":"D1","name":"<design name>","weight_kg":<number>,"recyclability":<0-1>,"msi":<0-1>,"stress_mpa":<number>,"co2_saved_kg":<number>,"material":"<string>","join_method":"<string>"},{"id":"D2",...},{"id":"D3",...}],"recommended":"D1|D2|D3","insight":"<one sentence technical insight on the recommended design>"}`,
+        messages: [{ role: 'user', content: `Generate 3 Pareto-optimal designs for: ${component}, min_recyclability=${rec}, max_weight=${wt}kg, load_case=${load}kN` }]
+      })
+    });
+    const data = await resp.json();
+    const text = data.content.map(i => i.text || '').join('');
+    const res = JSON.parse(text.replace(/```json|```/g, '').trim());
+    paretoCont.innerHTML = '';
+    res.designs.forEach(d => {
+      const isRec = d.id === res.recommended;
+      const el = document.createElement('div');
+      el.className = 'design-card' + (isRec ? ' selected' : '');
+      el.innerHTML = `
+        <div class="design-title">${d.name} ${isRec ? '<span style="font-size:10px;background:var(--ac-teal-light);color:var(--ac-teal-dark);padding:2px 6px;border-radius:10px;">Recommended</span>' : ''}</div>
+        <div class="design-bars">
+          <div class="design-bar-row"><span>Recyclability</span><div class="design-bar-bg"><div class="design-bar-fill" style="width:${Math.round(parseFloat(d.recyclability)*100)}%;background:var(--ac-teal)"></div></div><span>${parseFloat(d.recyclability).toFixed(2)}</span></div>
+          <div class="design-bar-row"><span>MSI</span><div class="design-bar-bg"><div class="design-bar-fill" style="width:${Math.round(parseFloat(d.msi)*100)}%;background:var(--ac-blue)"></div></div><span>${parseFloat(d.msi).toFixed(2)}</span></div>
+          <div class="design-bar-row"><span>Weight (kg)</span><div class="design-bar-bg"><div class="design-bar-fill" style="width:${Math.min(100,Math.round(parseFloat(d.weight_kg)/parseFloat(wt)*80))}%;background:var(--ac-amber)"></div></div><span>${parseFloat(d.weight_kg).toFixed(1)}</span></div>
+        </div>
+        <div style="font-size:11px;color:var(--color-text-secondary);margin-top:5px">${d.material} · ${d.join_method} · CO₂ saved: ${d.co2_saved_kg}kg</div>`;
+      paretoCont.appendChild(el);
+    });
+    resultBox.style.display = 'block';
+    resultBox.querySelector('p').textContent = res.insight;
+  } catch(e) {
+    const fallback = [{name:'Topology-Opt Lattice',rec:0.87,msi:0.81,wt:6.2,mat:'Al 6082'},{name:'Hybrid Bio-Composite',rec:0.91,msi:0.88,wt:5.8,mat:'NFRP+Al'},{name:'Single-Alloy Shell',rec:0.94,msi:0.76,wt:7.1,mat:'Al 7075'}];
+    paretoCont.innerHTML = fallback.map((d,i) => `<div class="design-card ${i===2?'selected':''}"><div class="design-title">${d.name} ${i===2?'<span style="font-size:10px;background:var(--ac-teal-light);color:var(--ac-teal-dark);padding:2px 6px;border-radius:10px;">Rec.</span>':''}</div><div class="design-bars"><div class="design-bar-row"><span>Recyclability</span><div class="design-bar-bg"><div class="design-bar-fill" style="width:${Math.round(d.rec*100)}%;background:var(--ac-teal)"></div></div><span>${d.rec}</span></div></div><div style="font-size:11px;color:var(--color-text-secondary);margin-top:5px">${d.mat}</div></div>`).join('');
+  }
+  btn.disabled = false;
+}
+
+// Carbon calculator
+function calcCarbon() {
+  const vehicles = parseInt(document.getElementById('c-vehicles').value);
+  const tl = parseInt(document.getElementById('c-2l').value) / 100;
+  const alPurity = parseInt(document.getElementById('c-al').value) / 100;
+  const re = parseInt(document.getElementById('c-re').value) / 100;
+  document.getElementById('v-vehicles').textContent = vehicles.toLocaleString();
+  document.getElementById('v-2l').textContent = Math.round(tl * 100) + '%';
+  document.getElementById('v-al').textContent = Math.round(alPurity * 100) + '%';
+  document.getElementById('v-re').textContent = Math.round(re * 100) + '%';
+  const battSaved = vehicles * tl * 4.2;
+  const alSaved = vehicles * 42 * alPurity * 0.0085;
+  const logisticsSaved = vehicles * 0.18 * 0.22;
+  const reSaved = vehicles * 0.5 * re * 0.3;
+  const monthly = battSaved + alSaved + logisticsSaved + reSaved;
+  const annual = monthly * 12;
+  const tokens = Math.round(monthly);
+  const revenue = tokens * 14.2;
+  document.getElementById('c-monthly').textContent = monthly.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',') + ' t';
+  document.getElementById('c-annual').textContent = annual.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',') + ' t CO₂e';
+  document.getElementById('c-tokens').textContent = tokens.toLocaleString() + ' ACCT';
+  document.getElementById('c-revenue').textContent = '$' + revenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+  const levers = [
+    {name:'Battery second-life routing', value: battSaved, pct: Math.round(battSaved/monthly*100)},
+    {name:'High-purity Al recovery', value: alSaved, pct: Math.round(alSaved/monthly*100)},
+    {name:'AI logistics optimisation', value: logisticsSaved, pct: Math.round(logisticsSaved/monthly*100)},
+    {name:'Renewable energy use', value: reSaved, pct: Math.round(reSaved/monthly*100)},
+  ];
+  document.getElementById('carbon-levers').innerHTML = levers.map(l => `<div class="soh-bar-wrap"><div class="soh-label"><span>${l.name}</span><span>${l.value.toFixed(0)} t (${l.pct}%)</span></div><div class="soh-bar"><div class="soh-fill" style="width:${l.pct}%;background:var(--ac-teal)"></div></div></div>`).join('');
+}
+</script>

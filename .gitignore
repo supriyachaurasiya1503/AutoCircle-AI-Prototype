@@ -1,0 +1,60 @@
+# Environment variables — never commit this
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# Build outputs
+frontend/dist/
+frontend/build/
+
+# Datasets — too large for git, folders completely ignored
+data/nasa_battery/
+data/calce/
+data/synthetic/
+
+# Model weights — too large for git
+models/lstm_soh/
+models/xgboost_soh/
+models/yolov8_components/
+
+# Notebooks checkpoints
+notebooks/.ipynb_checkpoints/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Docker
+.docker/
